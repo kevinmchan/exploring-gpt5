@@ -6,7 +6,6 @@ A script to test basic features in the OpenAI Response API:
 
 from dotenv import load_dotenv
 from openai import OpenAI
-from openai.types.responses import ResponseReasoningItem
 
 load_dotenv()
 
@@ -21,7 +20,7 @@ response = client.responses.create(
     input=[{"role": "user", "content": "Hello, gpt-5!"}],
 )
 for el in response.output:
-    if isinstance(el, ResponseReasoningItem):
+    if el.type == "reasoning":
         print("Summary:")
         print(el)
         break
@@ -36,7 +35,7 @@ response = client.responses.create(
     input=[{"role": "user", "content": "Hello, gpt-5!"}],
 )
 for el in response.output:
-    if isinstance(el, ResponseReasoningItem):
+    if el.type == "reasoning":
         print("Summary:")
         print(el)
         break

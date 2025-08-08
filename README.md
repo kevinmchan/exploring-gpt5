@@ -2,7 +2,7 @@
 
 I'd like to explore OpenAI's python Responses API, including using some of the new features released with GPT5. Given most of OpenAI's current flagship models are being deprecated, I will focus exclusively on features compatable with GPT5 for this exercise.
 
-Here are some scenarios I'd like to document:
+Here are some scenarios I'd like to document for later reference:
 - [x] Generating responses (hello gpt5)
 - [x] Providing developer prompts
 - [x] Getting back reasoning summary
@@ -189,7 +189,7 @@ response = client.responses.create(
     input=[{"role": "user", "content": "Hello, gpt-5!"}],
 )
 for el in response.output:
-    if isinstance(el, ResponseReasoningItem):
+    if el.type == "reasoning":
         print("Summary:")
         print(el)
         break
