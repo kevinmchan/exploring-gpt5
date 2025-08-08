@@ -11,6 +11,7 @@ Here are some scenarios I'd like to document:
 - [ ] Structured outputs
 - [ ] Getting token counts
 - [ ] Change verbosity
+- [ ] Provide image context
 
 
 ## Generating responses
