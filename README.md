@@ -3,10 +3,10 @@
 I'd like to explore OpenAI's python Responses API, including using some of the new features released with GPT5. Given most of OpenAI's current flagship models are being deprecated, I will focus exclusively on features compatable with GPT5 for this exercise.
 
 Here are some scenarios I'd like to document:
-- [ ] Generating responses (hello gpt5)
-- [ ] Providing developer prompts
-- [ ] Getting back reasoning trace
-- [ ] Changing reasoning level
+- [x] Generating responses (hello gpt5)
+- [x] Providing developer prompts
+- [x] Getting back reasoning summary
+- [x] Changing reasoning level
 - [ ] Tool calls
 - [ ] Structured outputs
 - [ ] Getting token counts
@@ -176,3 +176,23 @@ Trial 4: blue
 ```
 
 In the case of conflicts, we see that the model simply follows the latest instruction (amongst the system/developer/instruction prompts). It appears that each of these methods are roughly equivalent. I suspect that the "system" role is maintained in the API for backwards compatability but under the hood, it's treated equivalently to "developer". I assume "instructions" are also equivalent.
+
+
+## Reasoning level and reasoning summaries
+
+To set reasoning level and include reasoning summaries (see [reasoningsummary.py](scripts/reasoningsummary.py)):
+
+```python
+response = client.responses.create(
+    model="gpt-5-nano",
+    reasoning={"effort": "low", "summary": "detailed"},
+    input=[{"role": "user", "content": "Hello, gpt-5!"}],
+)
+for el in response.output:
+    if isinstance(el, ResponseReasoningItem):
+        print("Summary:")
+        print(el)
+        break
+    raise Exception("Did not find a reasoning item")
+print(f"Response: {response.output_text}")
+```
