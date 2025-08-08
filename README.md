@@ -14,4 +14,14 @@ Here are some scenarios I'd like to document:
 - [ ] Provide image context
 
 
-## Generating responses
+## Hello GPT5
+
+```python
+from openai import OpenAI
+client = OpenAI()
+
+response = client.responses.create(
+    model="gpt-5", input=[{"role": "user", "content": "Hello, gpt-5!"}]
+)
+print(response.output_text)
+```
