@@ -10,8 +10,8 @@ Here are some scenarios I'd like to document for later reference:
 - [x] Tool calls
 - [x] Structured outputs
 - [x] Getting token counts
-- [ ] Change verbosity
 - [ ] Provide image context
+- [ ] Change verbosity
 - [ ] Multi-turn conversation
 
 
@@ -247,3 +247,37 @@ ResponseUsage(input_tokens=13, input_tokens_details=InputTokensDetails(cached_to
 ```
 
 Notice that most of our output tokens are reasoning tokens (which don't get to see directly, beyond a generated summary if we explicity request it).
+
+
+## Image data
+
+To provide a model with image data, we can provide an image part, encoded in base64, as part of our message (see [scripts/passingimages.py](scripts/passingimages.py)).
+
+```python
+with open(image_path, "rb") as image_file:
+    image_data = base64.b64encode(image_file.read()).decode("utf-8")
+
+
+inputs: ResponseInputParam = [
+    EasyInputMessageParam(
+        {
+            "role": "user",
+            "content": [
+                {"type": "input_text", "text": "What do you see?"},
+                {
+                    "detail": "auto",
+                    "type": "input_image",
+                    "image_url": f"data:image/jpeg;base64,{image_data}",
+                },
+            ],
+        }
+    )
+]
+
+response = client.responses.create(
+    model="gpt-5-nano",
+    input=inputs,
+)
+
+print(response.output_text)
+```
