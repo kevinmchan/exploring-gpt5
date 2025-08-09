@@ -7,7 +7,7 @@ Here are some scenarios I'd like to document for later reference:
 - [x] Providing developer prompts
 - [x] Getting back reasoning summary
 - [x] Changing reasoning level
-- [ ] Tool calls
+- [x] Tool calls
 - [ ] Structured outputs
 - [ ] Getting token counts
 - [ ] Change verbosity
@@ -196,3 +196,29 @@ for el in response.output:
     raise Exception("Did not find a reasoning item")
 print(f"Response: {response.output_text}")
 ```
+
+## Tool calling
+
+### Specifying tool usage behaviour
+
+Let's examine setting up different model behaviours for tool calling:
+- call exactly one tool
+- call multiple tools in parallel
+- call any number of tools (zero, one, many)
+
+Per [scripts/toolcalling.py], we can specify the behaviour we want by manipulating the
+`parallel_tool_calls` and `tool_choice` parameters:
+
+```python
+response = client.responses.create(
+    model="gpt-5-nano",
+    input=[{"role": "user", "content": "Hello."}],
+    tools=tools,
+    parallel_tool_calls=False,  # Forces no more than one tool call | Or can set to True to allow multiple tool calls
+    tool_choice="required",  # Forces a tool call | Or can set to `auto` to make tool calling optional
+)
+```
+
+### Returning tool call results
+
+In [scripts/toolcallingloop.py], we demonstrate how to call tools requested by the model and return the results.
