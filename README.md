@@ -10,7 +10,7 @@ Here are some scenarios I'd like to document for later reference:
 - [x] Tool calls
 - [x] Structured outputs
 - [x] Getting token counts
-- [ ] Provide image context
+- [x] Provide image context
 - [ ] Change verbosity
 - [ ] Multi-turn conversation
 
