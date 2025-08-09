@@ -8,7 +8,7 @@ Here are some scenarios I'd like to document for later reference:
 - [x] Getting back reasoning summary
 - [x] Changing reasoning level
 - [x] Tool calls
-- [ ] Structured outputs
+- [x] Structured outputs
 - [ ] Getting token counts
 - [ ] Change verbosity
 - [ ] Provide image context
@@ -221,4 +221,11 @@ response = client.responses.create(
 
 ### Returning tool call results
 
-In [scripts/toolcallingloop.py], we demonstrate how to call tools requested by the model and return the results.
+In [scripts/toolcallingloop.py](scripts/toolcallingloop.py), we demonstrate how to call tools requested by the model and return the results.
+
+
+## Structured outputs
+
+My personal favourite way of writing applications with LLMs is to use constrained decoding to produce predictable structured outputs that our application understands how to process.
+
+See [scripts/structedoutputs.py](scripts/structedoutputs.py)
