@@ -9,7 +9,7 @@ Here are some scenarios I'd like to document for later reference:
 - [x] Changing reasoning level
 - [x] Tool calls
 - [x] Structured outputs
-- [ ] Getting token counts
+- [x] Getting token counts
 - [ ] Change verbosity
 - [ ] Provide image context
 - [ ] Multi-turn conversation
@@ -229,3 +229,21 @@ In [scripts/toolcallingloop.py](scripts/toolcallingloop.py), we demonstrate how 
 My personal favourite way of writing applications with LLMs is to use constrained decoding to produce predictable structured outputs that our application understands how to process.
 
 See [scripts/structedoutputs.py](scripts/structedoutputs.py)
+
+## Token usage statistics
+
+Getting back how many tokens are inputted / outputted in a model request is as simple as reading the ResponseUsage object from the model response.
+
+```python
+response = client.responses.create(
+    model="gpt-5-nano", input=[{"role": "user", "content": "Hello, gpt-5!"}]
+)
+print(response.usage)
+```
+
+Output:
+```
+ResponseUsage(input_tokens=13, input_tokens_details=InputTokensDetails(cached_tokens=0), output_tokens=517, output_tokens_details=OutputTokensDetails(reasoning_tokens=448), total_tokens=530)
+```
+
+Notice that most of our output tokens are reasoning tokens (which don't get to see directly, beyond a generated summary if we explicity request it).
